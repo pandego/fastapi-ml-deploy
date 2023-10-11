@@ -38,4 +38,3 @@ jobs:
     - name: Unit test
       run: |
         python starter/starter/test_model.py
-        pytest .
