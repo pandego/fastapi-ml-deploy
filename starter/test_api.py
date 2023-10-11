@@ -1,59 +1,66 @@
-"""
-Test the API
-
-Author: Miguel Dias
-Date: Ocotber 11, 2023
-"""
-import json
-
 from fastapi.testclient import TestClient
+
 from main import app
 
 client = TestClient(app)
 
-def test_welcome():
-    request = client.get("/")
-    assert request.status_code == 200
-    assert request.json() == "Welcome to the homepage"
 
-def test_inference_greater_50k():
-    data = {
-        'age': 33,
-        'workclass': 'Local-gov',
-        'fnlgt': 198183,
-        'education': 'Bachelors',
-        'education_num': 13,
-        'marital_status': 'Never-married',
-        'occupation': 'Prof-specialty',
-        'relationship': 'Not-in-family',
-        'race': 'White',
-        'sex': 'Female',
-        'capital_gain': 0,
-        'capital_loss': 0,
-        'hours_per_week': 50,
-        'native_country': 'United-States'
-    }
-    request = client.post("/", data=json.dumps(data))
-    assert request.status_code == 200
-    assert request.json() == " >50K"
+def test_read_root():
+    """Test the GET method."""
+    response = client.get("/")
+    assert response.status_code == 200
+    assert response.json() == {"message": "Welcome to the Machine Learning Model API!"}
 
-def test_inference_smaller_50k():
+
+def test_predict_positive():
+    """Test the POST method for a positive inference."""
+    # Adjust the input payload for a "positive" prediction (e.g., salary >50K)
     data = {
-        'age': 39,
-        'workclass': 'State-gov',
-        'fnlgt': 77516,
-        'education': 'Bachelors',
-        'education_num': 13,
-        'marital_status': 'Never-married',
-        'occupation': 'Adm-clerical',
-        'relationship': 'Not-in-family',
-        'race': 'White',
-        'sex': 'Male',
-        'capital_gain': 2174,
-        'capital_loss': 0,
-        'hours_per_week': 40,
-        'native_country': 'United-States'
+        "age": 40,
+        "workclass": "Private",
+        "fnlgt": 123456,
+        "education": "Bachelors",
+        "education_num": 13,
+        "marital_status": "Married-civ-spouse",
+        "occupation": "Exec-managerial",
+        "relationship": "Husband",
+        "race": "White",
+        "sex": "Male",
+        "capital_gain": 5000,
+        "capital_loss": 0,
+        "hours_per_week": 50,
+        "native_country": "United-States"
     }
-    request = client.post("/", data=json.dumps(data))
-    assert request.status_code == 200
-    assert request.json() == " <=50K"
+    response = client.post("/predict/", json=data)
+    assert response.status_code == 200
+    assert response.json() == ">50K"
+
+
+def test_predict_negative():
+    """Test the POST method for a negative inference."""
+    # Adjust the input payload for a "negative" prediction (e.g., salary <=50K)
+    data = {
+        "age": 25,
+        "workclass": "Private",
+        "fnlgt": 234567,
+        "education": "HS-grad",
+        "education_num": 9,
+        "marital_status": "Never-married",
+        "occupation": "Craft-repair",
+        "relationship": "Not-in-family",
+        "race": "White",
+        "sex": "Male",
+        "capital_gain": 0,
+        "capital_loss": 0,
+        "hours_per_week": 40,
+        "native_country": "United-States"
+    }
+    response = client.post("/predict/", json=data)
+    assert response.status_code == 200
+    assert response.json() == "<=50K"
+
+if __name__ == "__main__":
+    test_read_root()
+    test_predict_positive()
+    test_predict_negative()
+    print("All tests passed!")
