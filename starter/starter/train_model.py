@@ -38,7 +38,7 @@ X_test, y_test, _, _ = process_data(
     test, categorical_features=cat_features, label="salary", training=False, encoder=encoder, lb=lb
 )
 
-# Train and save a model.
+# Train and save a model
 model = train_model(X_train, y_train)
 
 # Save the trained model and encoders
