@@ -41,4 +41,4 @@ jobs:
     - name: Unit test API
       run: |
         cd starter
-        python test_model.py
+        python test_api.py
