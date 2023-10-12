@@ -3,8 +3,8 @@ from fastapi import FastAPI, HTTPException
 from joblib import load
 from pydantic import BaseModel, Field
 
-from starter.ml.data import process_data
-from starter.ml.model import inference
+from .starter.ml.data import process_data
+from .starter.ml.model import inference
 
 try:
     # Load your trained model and encoders here

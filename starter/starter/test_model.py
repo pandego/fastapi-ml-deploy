@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.base import BaseEstimator
 
-from ml.model import train_model, inference, compute_model_metrics
+from .ml.model import train_model, inference, compute_model_metrics
 
 
 def test_train_model():
