@@ -4,14 +4,14 @@ Script to train machine learning model.
 
 from sklearn.model_selection import train_test_split
 
-# Add the necessary imports for the starter code.
+# Add the necessary imports for the src code.
 import pandas as pd
 from ml.data import process_data
 from ml.model import train_model, save_model, save_encoder, compute_model_metrics
 
 
 # Add code to load in the data.
-data = pd.read_csv('starter/data/census.csv')
+data = pd.read_csv('src/data/census.csv')
 
 # Stripping spaces from column names
 data.columns = data.columns.str.strip()  # TODO: opportunity to use DVC
@@ -42,9 +42,9 @@ X_test, y_test, _, _ = process_data(
 model = train_model(X_train, y_train)
 
 # Save the trained model and encoders
-save_model(model, 'starter/model/model.pkl')
-save_encoder(encoder, 'starter/model/encoder.pkl')
-save_encoder(lb, 'starter/model/label_encoder.pkl')
+save_model(model, 'src/model/model.pkl')
+save_encoder(encoder, 'src/model/encoder.pkl')
+save_encoder(lb, 'src/model/label_encoder.pkl')
 
 # Compute metrics on test set
 preds = model.predict(X_test)

@@ -58,15 +58,15 @@ if __name__ == "__main__":
     ]
 
     # Load in the data.
-    data = pd.read_csv('starter/data/census.csv')
+    data = pd.read_csv('src/data/census.csv')
 
     # Stripping spaces from column names
     data.columns = data.columns.str.strip()
 
     # Load the model and encoders
-    model = load("starter/model/model.pkl")
-    encoder = load("starter/model/encoder.pkl")
-    lb = load("starter/model/label_encoder.pkl")
+    model = load("src/model/model.pkl")
+    encoder = load("src/model/encoder.pkl")
+    lb = load("src/model/label_encoder.pkl")
 
     X, y, _, _ = process_data(data, categorical_features=cat_features, label="salary", training=False,
                               encoder=encoder, lb=lb)
@@ -75,7 +75,7 @@ if __name__ == "__main__":
         metrics_dict = compute_metrics_on_slices(model, data, feature, encoder, lb)
 
         # Append outputs to slice_output.txt
-        with open("starter/starter/slice_output.txt", "a") as file:
+        with open("src/src/slice_output.txt", "a") as file:
             for value, metrics in metrics_dict.items():
                 file.write(f"Metrics for '{feature}' ={value}:\n")
                 file.write(f"Precision: {metrics['precision']:.4f}\n")
